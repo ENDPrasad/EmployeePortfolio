@@ -5,17 +5,45 @@ function App() {
   const [items, setItems] = useState([])
   const [searchedItems, setSearchedItems] = useState([])
 
-  function getSearchedResults(search){
+  function searchByName(search){
     var searchedResult = []
     items.forEach((d)=>{
-      console.log(d.name)
+      console.log(d.name.toLowerCase())
+      var name = d.name.toLowerCase()
       console.log(search)
-      if(d.name.toLowerCase().includes(search.toLowerCase()))
+      if(name.includes(search.toString().toLowerCase()))
         searchedResult.push(d)
     })
     console.log(searchedResult)
     if(searchedResult.length > 0)
       setSearchedItems(searchedResult)
+    else
+      setSearchedItems([{}])
+  }
+
+  function searchByID(search){
+    var searchedResult = []
+    items.forEach((d)=>{
+      console.log(d.cognizant_ID)
+      console.log(search)
+      if(d.cognizant_ID.toString().includes(search))
+        searchedResult.push(d)
+    })
+    console.log(searchedResult)
+    if(searchedResult.length > 0)
+      setSearchedItems(searchedResult)
+    else
+      setSearchedItems([{}])
+  }
+
+  function getSearchedResults(search){
+    if(isNaN(search)){
+      searchByName(search)
+      
+    }else{
+      searchByID(search)   
+    }
+    
   }
 
   useEffect(()=>{
@@ -40,9 +68,11 @@ function App() {
   <div className="container-fluid">
     <a className="navbar-brand">Employee Details Portal</a>
     <form className="d-flex">
-    <input type="text" className="form-control me-2" placeholder="Search by name" aria-label="name" aria-describedby="button-addon2" onChange={(e)=>{
+    <div className="form-outline w-100">
+    <input id="input1" type="text" className="form-control me-5" placeholder="Search by name or Cognizant ID" aria-label="name" aria-describedby="button-addon2" onChange={(e)=>{
     getSearchedResults(e.target.value);
   }}/>
+  </div>
     </form>
   </div>
 </nav>

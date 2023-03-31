@@ -5,11 +5,22 @@ const cors = require('cors')
 
 const workbook = XLSX.readFile("H:/Web Development/EmployeeDetails/server/data/employeeDetails.xlsx")
 const worksheet = workbook.Sheets[workbook.SheetNames[0]]
-console.log(worksheet)
+console.log(worksheet.length)
 var i = 1
 var index = 0
 var dataList = []
-for(i=2;i<9;i++){
+var rowCount = 0
+var alphabets = 65;
+while(worksheet[`A${i}`] != undefined){
+  // Need to find row size
+  rowCount++
+  i++
+}
+
+console.log(rowCount)
+
+
+for(i=2;i<rowCount+1;i++){
     // var row = []
     // row.concat(worksheet[`A${i}`].v)
     // row.concat(worksheet[`B${i}`].v)
